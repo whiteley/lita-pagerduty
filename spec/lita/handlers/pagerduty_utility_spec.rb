@@ -15,6 +15,15 @@ describe Lita::Handlers::PagerdutyUtility, lita_handler: true do
     Lita.config.handlers.pagerduty.subdomain = 'bar'
   end
 
+  describe '#on_call_list' do
+    it 'shows a list of schedules' do
+      expect(Pagerduty).to receive(:new) { get_schedules }
+      foo = Lita::User.create(123, name: 'foo')
+      send_command('pager oncall', as: foo)
+      expect(replies.last).to eq("Available schedules:\nfoo\nbar")
+    end
+  end
+
   describe '#identify' do
     describe 'when that email is new' do
       it 'shows a successful identification' do

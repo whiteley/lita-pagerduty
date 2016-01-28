@@ -208,4 +208,14 @@ RSpec.shared_context 'basic fixtures' do
     end
     client
   end
+
+  let(:get_schedules) do
+    client = double
+    expect(client).to receive(:get_schedules) do
+      double(
+        schedules: [double(id: 1, name: 'foo'), double(id: 2, name: 'bar')]
+      )
+    end
+    client
+  end
 end
